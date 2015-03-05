@@ -1,0 +1,225 @@
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.InputMismatchException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
+
+class BUGLIFE {
+
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		// TODO Auto-generated method stub
+//BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+		InputReader1 ir=new InputReader1(System.in);
+		int t=ir.readInt();
+StringBuilder sb=new StringBuilder();
+
+int test=1;
+while(t-->0){
+	//StringTokenizer st=new StringTokenizer(br.readLine());
+	int N=ir.readInt();
+	int M=ir.readInt();
+	Graph1 g1=new Graph1();
+	List<Integer> list1[]=g1.createGraph(N);
+	for(int i=0;i<M;i++){
+		//st=new StringTokenizer(br.readLine());
+		int x=ir.readInt();
+		int y=ir.readInt();
+		g1.addEdge(list1,x-1,y-1);
+	}
+	//boolean isBipartite=g1.BFS(list1);
+	boolean isBipartite=g1.DFS(list1);
+	sb.append("Scenario #"+test++ +":\n");
+	if(!isBipartite)
+	sb.append("Suspicious bugs found!\n");
+	else sb.append("No suspicious bugs found!\n");
+}
+	System.out.println(sb);
+	}
+}
+class Graph1{
+	//int parent[];
+	boolean visited[];
+	boolean colour[];
+	public List<Integer>[] createGraph(int size){
+		List<Integer> graph[]=new List[size];
+		for(int i=0;i<size;i++){
+			graph[i]=new ArrayList<Integer>();
+		}
+		//parent=new int[size];
+		visited=new boolean[size];
+		colour=new boolean[size];
+		//Arrays.fill(parent, -1);
+	//	Arrays.fill(visited, false);
+	//	Arrays.fill(colour, true);
+		return graph;
+	}
+	
+	public void addEdge(List<Integer> graph[],int s,int d){
+		graph[s].add(d);
+		graph[d].add(s);
+	}
+	public boolean BFS(List<Integer> graph[]){
+		for(int i=0;i<graph.length;i++){
+			if(!visited[i]){
+				if(!BFS_visit(graph, i))return false;
+			}
+		}
+		return true;
+	}
+	public boolean BFS_visit(List<Integer> graph[],int source){
+		
+		visited[source]=true;
+		Queue<Integer> q=new LinkedList<Integer>();
+		q.add(source);
+		while(q.size()>0){
+			int u=q.remove();
+			for(int i=0;i<graph[u].size();i++){
+				int v=graph[u].get(i);
+				if(!visited[v]){
+				//	parent[v]=u;
+					colour[v]=!colour[u];
+					visited[v]=true;
+					q.add(v);
+				}
+				else if(colour[v]==colour[u]){
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	public boolean DFS(List<Integer> graph[]){
+		for(int i=0;i<graph.length;i++){
+			if(!visited[i]){
+				//colour[i]=true;
+				if(!DFS_Visit(graph, i))return false;
+			}
+		}
+		return true;
+	}
+	public boolean DFS_Visit(List<Integer> graph[],int source){
+		visited[source]=true;
+		
+		for(int i=0;i<graph[source].size();i++){
+			int get=graph[source].get(i);
+			if(!visited[get]){
+				colour[get]= !colour[source];
+				DFS_Visit(graph, get);
+			}
+			else if(colour[source]==colour[get]){
+				return false;
+			}
+		}
+		return true;
+	}
+}
+class InputReader1 {
+	 
+	private InputStream stream;
+	private byte[] buf = new byte[1024];
+	private int curChar;
+	private int numChars;
+	private SpaceCharFilter filter;
+ 
+	public InputReader1(InputStream stream) {
+		this.stream = stream;
+	}
+ 
+	public int read() {
+		if (numChars == -1)
+			throw new InputMismatchException();
+		if (curChar >= numChars) {
+			curChar = 0;
+			try {
+				numChars = stream.read(buf);
+			} catch (IOException e) {
+				throw new InputMismatchException();
+			}
+			if (numChars <= 0)
+				return -1;
+		}
+		return buf[curChar++];
+	}
+ 
+	public int readInt() {
+		int c = read();
+		while (isSpaceChar(c))
+			c = read();
+		int sgn = 1;
+		if (c == '-') {
+			sgn = -1;
+			c = read();
+		}
+		int res = 0;
+		do {
+			if (c < '0' || c > '9')
+				throw new InputMismatchException();
+			res *= 10;
+			res += c - '0';
+			c = read();
+		} while (!isSpaceChar(c));
+		return res * sgn;
+	}
+ 
+	public boolean isSpaceChar(int c) {
+		if (filter != null)
+			return filter.isSpaceChar(c);
+		return isWhitespace(c);
+	}
+ 
+	public static boolean isWhitespace(int c) {
+		return c == ' ' || c == '\n' || c == '\r' || c == '\t' || c == -1;
+	}
+ 
+	public char readCharacter() {
+		int c = read();
+		while (isSpaceChar(c))
+			c = read();
+		return (char) c;
+	}
+ 
+	public interface SpaceCharFilter {
+		public boolean isSpaceChar(int ch);
+	}
+}
+ 
+class OutputWriter {
+	private final PrintWriter writer;
+ 
+	public OutputWriter(OutputStream outputStream) {
+		writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(outputStream)));
+	}
+ 
+	public OutputWriter(Writer writer) {
+		this.writer = new PrintWriter(writer);
+	}
+ 
+	public void close() {
+		writer.close();
+	}
+ 
+	public void printLine(int i) {
+		writer.println(i);
+	}
+}
+ 
+class IOUtils1 {
+ 
+	public static int[] readIntArray(InputReader1 in, int size) {
+		int[] array = new int[size];
+		for (int i = 0; i < size; i++)
+			array[i] = in.readInt();
+		return array;
+	}
+ 
+}
+ 

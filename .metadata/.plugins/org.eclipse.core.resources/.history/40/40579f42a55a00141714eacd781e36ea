@@ -1,0 +1,127 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+
+class BITMAP {
+static int array[][];
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		// TODO Auto-generated method stub
+BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+int t=Integer.parseInt(br.readLine());
+StringBuilder sb=new StringBuilder();
+while(t-->0){
+	Graph g=new Graph();
+	StringTokenizer st=new StringTokenizer(br.readLine());
+	int a=Integer.parseInt(st.nextToken());
+	int b=Integer.parseInt(st.nextToken());
+	List<Integer> graph[]=g.createGraph(a*b);
+	Arrays.fill(g.distance,Integer.MAX_VALUE);
+	//Arrays.fill(g.colour, 'W');
+	//Arrays
+	int white[]=new int[a*b];
+	 array=new int[a][b];
+	//int distance[]=new int[a*b];
+	int k=0,n=0;
+	for(int i=0;i<a;i++){
+		String s=br.readLine();
+		for(int j=0;j<b;j++){
+			array[i][j]=Integer.parseInt(s.charAt(j)+"");
+			if((n-1)>=0 && (n-1)%4!=3)
+				g.addEdge(graph,n, n-1);
+			//graph[i+j].add(i+j-1);
+			if((n+1)%4!=0)
+			g.addEdge(graph,n,n+1);
+			if(n+b<a*b)
+				g.addEdge(graph, n, n+b);
+			if(n-b>=0)
+				g.addEdge(graph, n, n-b);
+			if(array[i][j]==1){
+				white[k++]=n;
+				g.distance[n]=0;
+			}
+			n++;
+		}
+	}
+	/*for(int i=0;i<graph.length;i++){
+		System.out.print(i+" ");
+		for(int j=0;j<graph[i].size();j++){
+			System.out.print(graph[i].get(j)+" ");
+		}
+		System.out.println();
+	}
+	*/
+	for(int i=0;i<k;i++){
+		g.BFS(graph,white[i],b);
+		//int f=0;
+		//System.out.println(white[i]);
+		//for(int w=0;w<a;w++){
+			//for(int j=0;j<b;j++){
+				//System.out.print(g.distance[f++]+" ");	
+			//}
+			//System.out.println();
+		//}
+		//System.out.println();
+	}
+	k=0;
+	for(int i=0;i<a;i++){
+		for(int j=0;j<b;j++){
+		sb.append(g.distance[k++]+" ");	
+		}
+		sb.append("\n");
+	}
+}
+	System.out.println(sb);
+	}
+static class Graph{
+	int distance[];
+	char colour[];
+	int parent[];
+	public List<Integer>[] createGraph(int size){
+		List<Integer> graph[]=new List[size];
+		for(int i=0;i<size;i++)
+			graph[i]=new ArrayList<Integer>();
+		
+		distance=new int[size];
+		colour=new char[size];
+		//parent=new int[size];
+		
+		return graph;
+	}
+	public void addEdge(List<Integer> graph[],int s,int d){
+		graph[s].add(d);
+		graph[d].add(s);
+	}
+	public void BFS(List<Integer> graph[],int n,int b){
+		Arrays.fill(colour, 'W');
+		Queue<Integer> q=new LinkedList<Integer>();
+		q.add(n);
+		colour[n]='G';
+		while(q.size()>0){
+			int remove=q.remove();
+			for(int i=0;i<graph[remove].size();i++){
+				int x=graph[remove].get(i);
+				if(colour[x]=='W'){
+					colour[x]='G';
+				int row=x/b;
+				int col=x%b;
+				if(array[row][col]==1)continue;
+				else{
+					if(distance[x]>distance[remove]+1){
+						distance[x]=distance[remove]+1;
+					}
+				}
+				q.add(x);
+				}
+			}
+			
+		}
+	}
+}
+}

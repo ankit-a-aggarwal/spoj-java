@@ -1,0 +1,47 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+//import java.util.Arrays;
+import java.util.StringTokenizer;
+
+
+class HOTELS {
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+StringTokenizer st=new StringTokenizer(br.readLine());
+int N=Integer.parseInt(st.nextToken());
+int M=Integer.parseInt(st.nextToken());
+int a[]=new int[N];
+st=new StringTokenizer(br.readLine());
+for(int i=0;i<N;i++){
+	a[i]=Integer.parseInt(st.nextToken());
+}
+//Arrays.sort(a);
+long sum=0,max_sum=Integer.MIN_VALUE;
+for(int i=0,j=0;i<a.length && j<a.length;){
+	
+	if( sum+a[j]<=M){
+		sum+=a[j];
+		j++;
+	}
+	else if(sum+a[j]==M){
+		System.out.println(sum+a[j]);
+		System.exit(0);
+	}
+	else{
+		sum-=a[i];
+		i++;
+	}
+	if(i==j)j++;
+	if(sum==M || max_sum==M){
+		System.out.println(sum);System.exit(0);
+	}
+	System.out.println(sum+" "+max_sum);
+	max_sum=Math.max(sum,max_sum);
+}
+System.out.println(max_sum);
+	}
+
+}

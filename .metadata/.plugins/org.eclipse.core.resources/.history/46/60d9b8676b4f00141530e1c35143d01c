@@ -1,0 +1,52 @@
+import java.util.Arrays;
+
+//import java.io.BufferedReader;
+//import java.io.InputStreamReader;
+
+
+class DIV {
+	static boolean p[];
+static int primes[];
+static int divisors[];
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+//BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+sieve_primes();
+System.out.println("Hello");
+divisors();
+StringBuilder sb=new StringBuilder();
+for(int i=9;i<divisors.length;i+=9){
+	sb.append(divisors[i]+"\n");
+}
+	System.out.println(sb);
+	}
+public static void sieve_primes(){
+	p=new boolean[1001];
+	primes=new int[1001];
+	p[0]=p[1]=true;
+	for(int i=4;i<p.length;i+=2)p[i]=true;
+	for(int i=3;i*i<p.length;i++){
+		int m=i;
+		int mp=m*i;
+		while(mp<p.length){
+			p[mp]=true;
+			m+=2;
+			mp=m*i;
+		}
+	}
+	int count=0;
+	for(int i=2;i<p.length;i++){
+		if(!p[i])
+			primes[count++]=i;
+	}
+	Arrays.copyOf(primes, count);
+}
+public static void divisors(){
+	divisors=new int[1000001];
+	for(int i=0;i<primes.length;i++){
+		for(int j=primes[i];j<divisors.length;j+=primes[i]){
+			divisors[j]++;
+		}
+	}
+}
+}

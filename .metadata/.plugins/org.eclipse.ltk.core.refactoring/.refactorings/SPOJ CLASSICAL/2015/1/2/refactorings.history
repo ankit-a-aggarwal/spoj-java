@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete element from project &apos;SPOJ CLASSICAL&apos;&#x0A;- Original project: &apos;SPOJ CLASSICAL&apos;&#x0A;- Original element: &apos;MULTQ3.java&apos;" description="Delete element" element1="/src&lt;{MULTQ3.java" elements="1" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1420867894212" subPackages="false" version="1.0"/>
+</session>

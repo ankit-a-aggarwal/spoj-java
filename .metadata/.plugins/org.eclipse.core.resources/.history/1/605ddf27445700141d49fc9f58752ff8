@@ -1,0 +1,29 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+class ACODE {
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
+		while (true) {
+			String s = br.readLine();
+			if (s.equals("0"))
+				break;
+			int ans[] = new int[s.length()];
+			ans[0] = 1;
+			if (s.charAt(1) <= '6')
+				ans[1] = 2;
+			else
+				ans[1] = 1;
+			for (int i = 2; i < s.length(); i++) {
+				ans[i] = ans[i - 1] + (s.charAt(i) <= '6' ? ans[i-2] : 1);
+			}
+			sb.append(ans[s.length() - 1] + "\n");
+		}
+		System.out.println(sb);
+	}
+
+}

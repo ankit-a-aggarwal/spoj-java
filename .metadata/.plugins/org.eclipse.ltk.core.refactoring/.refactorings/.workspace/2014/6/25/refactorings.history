@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename Java project &apos;LIS(Ahmed-Aly)&apos; to &apos;LCS(Ahmed-Aly)&apos;&#x0D;&#x0A;- Original element: &apos;LIS(Ahmed-Aly)&apos;&#x0D;&#x0A;- Renamed element: &apos;LIS(Ahmed-Aly)&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename Java project &apos;LIS(Ahmed-Aly)&apos;" flags="7" id="org.eclipse.jdt.ui.rename.java.project" input="=LIS\(Ahmed-Aly)" name="LCS(Ahmed-Aly)" references="true" stamp="1403185493119" version="1.0"/>
+</session>

@@ -1,0 +1,30 @@
+//import java.io.BufferedReader;
+import java.io.IOException;
+//import java.io.InputStreamReader;
+import java.util.Scanner;
+
+
+class COINS {
+
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		// TODO Auto-generated method stub
+//BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+		Scanner sc=new Scanner(System.in);
+		StringBuilder sb=new StringBuilder();
+while(sc.hasNext()){
+	long N=sc.nextLong();
+	
+	sb.append(maximize_dollars(N)+"\n");
+	break;
+}
+
+	System.out.println(sb);
+	sc.close();
+	}
+public static long maximize_dollars(long n){
+	if(n==0)return 0;
+	if(n==1)return 1;
+	
+	return Math.max(n,maximize_dollars(n/2)+maximize_dollars(n/3)+maximize_dollars(n/4));
+}
+}
